@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="streams.controllers.MainController">
+   <children>
+      <TextField fx:id="input" layoutX="82.0" layoutY="44.0" prefHeight="25.0" prefWidth="260.0" promptText="Choose input file location" />
+      <Button fx:id="inputFile" layoutX="352.0" layoutY="44.0" mnemonicParsing="false" onAction="#pressInputFileChooser" prefHeight="25.0" prefWidth="24.0" text="..." />
+      <TextField fx:id="output" layoutX="82.0" layoutY="93.0" prefHeight="25.0" prefWidth="260.0" promptText="Choose output file location" />
+      <Button fx:id="outputFile" layoutX="352.0" layoutY="93.0" mnemonicParsing="false" onAction="#pressOutputFileChooser" text="..." />
+      <TextField fx:id="buffer" layoutX="82.0" layoutY="143.0" prefHeight="25.0" prefWidth="260.0" promptText="Enter buffer size" />
+      <Button fx:id="start" layoutX="82.0" layoutY="187.0" mnemonicParsing="false" onAction="#pressStartButton" prefHeight="25.0" prefWidth="140.0" text="Start" />
+      <Button cancelButton="true" layoutX="236.0" layoutY="187.0" mnemonicParsing="false" onAction="#pressCancelButton" prefHeight="25.0" prefWidth="140.0" text="Cancel" />
+      <Label focusTraversable="false" layoutX="352.0" layoutY="147.0" prefHeight="17.0" prefWidth="24.0" text="MB" />
+      <Label focusTraversable="false" layoutX="82.0" layoutY="27.0" text="Input file" />
+      <Label focusTraversable="false" layoutX="82.0" layoutY="76.0" text="Output file" />
+      <Label focusTraversable="false" layoutX="82.0" layoutY="126.0" text="Buffer size" />
+   </children>
+</Pane>

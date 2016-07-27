@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="192.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="streams.controllers.FlowController">
+   <children>
+      <Button layoutX="82.0" layoutY="48.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Pause Input" />
+      <Button layoutX="236.0" layoutY="48.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Pause Output" />
+      <ProgressBar focusTraversable="false" layoutX="82.0" layoutY="87.0" prefHeight="18.0" prefWidth="294.0" progress="0.0" />
+      <Button layoutX="82.0" layoutY="118.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Show Buffer" />
+      <Button fx:id="flowCancel" cancelButton="true" layoutX="236.0" layoutY="118.0" mnemonicParsing="false" onAction="#pressCancelButton" prefHeight="25.0" prefWidth="140.0" text="Cancel" />
+   </children>
+</Pane>
