@@ -1,15 +1,14 @@
 package streams.controllers;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import streams.checks.Checks;
+import streams.tasks.Tasks;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,36 +20,109 @@ public class MainController {
 
     // default path in case of USERPROFILE variable couldn't be found
     final static String USER_PROFILE_PATH = System.getProperty("user.home");
+    private boolean closedError;
+    private int buffer;
+    private Tasks tasks;
+
+    Task inputWorker;
+    Task outputWorker;
 
     @FXML
     private Button start;
-
     @FXML
     private TextField input;
-
+    @FXML
+    private Button inputFile;
     @FXML
     private TextField output;
-
     @FXML
-    private TextField buffer;
+    private Button outputFile;
+    @FXML
+    private TextField bufferInput;
+    @FXML
+    private ProgressBar progress;
+    @FXML
+    private Button pauseInput;
+    @FXML
+    private Button pauseOutput;
+    @FXML
+    private Button exit;
+    @FXML
+    private Button cancelCopy;
 
-    public void pressStartButton(ActionEvent event) throws IOException {
-        // hide the main window
-        ((Stage) start.getScene().getWindow()).close();
-
-        // open the flow window
-        String fxmlFile = "/fxml/flow.fxml";
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        Parent flowWindow = loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("Streams control");
-        stage.setScene(new Scene(flowWindow));
-        stage.show();
-    }
-
-    public void pressCancelButton(ActionEvent event) {
+    public void pressExitButton(ActionEvent event) {
         // close the application
         Platform.exit();
+    }
+
+    public void pressStartButton(ActionEvent event) throws IOException {
+        // check input fields
+        if (isTrue()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect values entered\nPlease check the form");
+            alert.setHeaderText(null);
+            alert.setOnCloseRequest(closeEvent -> closedError = true);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK || closedError) {
+                // return to the main form
+                return;
+            }
+        }
+
+        tasks = new Tasks(buffer);
+
+        input.setDisable(true);
+        inputFile.setDisable(true);
+        output.setDisable(true);
+        outputFile.setDisable(true);
+        bufferInput.setDisable(true);
+        progress.setVisible(true);
+        pauseInput.setVisible(true);
+        pauseOutput.setVisible(true);
+        start.setDisable(true);
+        exit.setVisible(false);
+        cancelCopy.setVisible(true);
+
+        progress.setProgress(0);
+        inputWorker = tasks.createIn(input.getText(), buffer);
+        outputWorker = tasks.createOut(output.getText());
+
+        // bind progress to the task
+        progress.progressProperty().unbind();
+        progress.progressProperty().bind(inputWorker.progressProperty());
+
+        // start copying process
+        try {
+            new Thread(inputWorker).start();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect values entered\nPlease check the main form");
+            alert.setHeaderText(null);
+            alert.setOnCloseRequest(closeEvent -> closedError = true);
+            alert.showAndWait();
+        }
+        new Thread(outputWorker).start();
+    }
+
+    public void pressCancelCopyButton(ActionEvent event) {
+        // stop the process
+        inputWorker.cancel();
+        outputWorker.cancel();
+
+        input.setDisable(false);
+        inputFile.setDisable(false);
+        output.setDisable(false);
+        outputFile.setDisable(false);
+        bufferInput.setDisable(false);
+        progress.setVisible(false);
+        pauseInput.setVisible(false);
+        pauseOutput.setVisible(false);
+        start.setDisable(false);
+        exit.setVisible(true);
+        cancelCopy.setVisible(false);
+
+        // unbind progress to the task
+        progress.progressProperty().unbind();
+        progress.setProgress(0);
     }
 
     public void pressInputFileChooser(ActionEvent event) {
@@ -62,7 +134,9 @@ public class MainController {
         // start file chooser by clicking on the button
         Stage stage = new Stage();
         File file = chooser.showOpenDialog(stage);
-        if (file != null) input.setText(file.getAbsolutePath());
+        if (file != null) {
+            input.setText(file.getAbsolutePath());
+        }
     }
 
     public void pressOutputFileChooser(ActionEvent event) {
@@ -77,7 +151,18 @@ public class MainController {
         if (file != null) output.setText(file.getAbsolutePath());
     }
 
-    public void checkBufferField(ActionEvent event) {
+    public void pressPauseInput(ActionEvent event) throws InterruptedException {
+        if (inputWorker.isRunning()) {
+            inputWorker.wait();
+            pauseInput.setText("Resume Input");
+        } else {
+            inputWorker.notify();
+            pauseInput.setText("Pause Input");
+        }
+    }
 
+    private boolean isTrue() {
+        buffer = Checks.isBufferInputCorrect(bufferInput.getText());
+        return (Checks.isInputNull(input.getText(), output.getText(), bufferInput.getText()) || buffer < 1);
     }
 }

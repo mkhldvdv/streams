@@ -20,7 +20,7 @@ public class StreamsApp extends Application {
         String fxmlFile = "/fxml/main.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent mainWindow = loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("Streams init");
+        stage.setTitle("Streams");
         stage.setScene(new Scene(mainWindow));
         stage.show();
     }
