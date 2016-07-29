@@ -18,6 +18,12 @@ public class Tasks {
         buffer = new LinkedBlockingQueue<>(capacity);
     }
 
+    /**
+     * create task for input stream
+     *
+     * @param input file destination
+     * @return created task
+     */
     public CustomTask createIn(String input) {
         return new CustomTask() {
             @Override
@@ -48,6 +54,12 @@ public class Tasks {
         };
     }
 
+    /**
+     * create task for output stream
+     *
+     * @param output file destination
+     * @return created task
+     */
     public CustomTask createOut(String output) {
         return new CustomTask() {
             @Override
@@ -74,6 +86,12 @@ public class Tasks {
         };
     }
 
+    /**
+     * create task to monitor buffer fullness
+     *
+     * @param capacity buffer capacity
+     * @return created task
+     */
     public CustomTask monitorState(int capacity) {
         return new CustomTask() {
             @Override

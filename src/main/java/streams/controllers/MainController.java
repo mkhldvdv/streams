@@ -53,11 +53,22 @@ public class MainController {
     @FXML
     private Button cancelCopy;
 
+    /**
+     * handle Exit button click event
+     *
+     * @param event
+     */
     public void pressExitButton(ActionEvent event) {
         // close the application
         Platform.exit();
     }
 
+    /**
+     * handle Start button click event
+     *
+     * @param event
+     * @throws IOException
+     */
     public void pressStartButton(ActionEvent event) throws IOException {
         // check input fields
         if (isTrue()) {
@@ -114,6 +125,11 @@ public class MainController {
         alert.showAndWait();
     }
 
+    /**
+     * handle Cancel copy button click event
+     *
+     * @param event
+     */
     public void pressCancelCopyButton(ActionEvent event) {
         // stop the process
         inputWorker.cancel();
@@ -137,6 +153,11 @@ public class MainController {
         progress.setProgress(0);
     }
 
+    /**
+     * handle Input file chooser button click event
+     *
+     * @param event
+     */
     public void pressInputFileChooser(ActionEvent event) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select input file");
@@ -151,6 +172,11 @@ public class MainController {
         }
     }
 
+    /**
+     * handle Output file chooser button click event
+     *
+     * @param event
+     */
     public void pressOutputFileChooser(ActionEvent event) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select output file");
@@ -163,6 +189,12 @@ public class MainController {
         if (file != null) output.setText(file.getAbsolutePath());
     }
 
+    /**
+     * handle Pause Input button click event
+     *
+     * @param event
+     * @throws InterruptedException
+     */
     public void pressPauseInput(ActionEvent event) throws InterruptedException {
         if (inputWorker.getRun()) {
             inputWorker.pause();
@@ -175,6 +207,12 @@ public class MainController {
         }
     }
 
+    /**
+     * handle Pause Output button click event
+     *
+     * @param event
+     * @throws InterruptedException
+     */
     public void pressPauseOutput(ActionEvent event) throws InterruptedException {
         if (outputWorker.getRun()) {
             outputWorker.pause();

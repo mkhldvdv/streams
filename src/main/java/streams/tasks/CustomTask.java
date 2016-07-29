@@ -22,19 +22,31 @@ public abstract class CustomTask extends Task {
         return isStopped;
     }
 
+    /**
+     * set Stop flag for thread
+     */
     public void stopThread() {
         isStopped = true;
     }
 
+    /**
+     * set Pause flag for thread
+     */
     public void pause() {
         isPaused = true;
     }
 
+    /**
+     * resuming the thread
+     */
     public void resume() {
         isPaused = false;
         synchronized(this) { this.notifyAll(); }
     }
 
+    /**
+     * check if thread is on pause
+     */
     public synchronized void checkPaused() {
         while(isPaused) {
             try {
