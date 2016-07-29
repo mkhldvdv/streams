@@ -15,21 +15,25 @@ public class Tasks {
     private final LinkedBlockingQueue<Integer> buffer;
     private boolean dataExist = true;
 
+
     public Tasks(int capacity) {
         buffer = new LinkedBlockingQueue<>(capacity);
     }
 
-    public Task createIn(String input, int capacity) {
-        return new Task<Void>() {
+    public CustomTask createIn(String input) {
+        return new CustomTask() {
             @Override
             protected Void call() throws Exception {
                 InputStream is = null;
                 try {
                     is = new FileInputStream(input);
                     while (is.available() > 0) {
+                        // check if the thread paused
+                        checkPaused();
+
                         buffer.put(is.read());
                         current.incrementAndGet();
-                        updateProgress(current.get(), capacity);
+//                        updateProgress(current.get(), capacity);
                         if (is.available() == 0) {
                             dataExist = false;
                         }
@@ -46,14 +50,17 @@ public class Tasks {
         };
     }
 
-    public Task createOut(String output) {
-        return new Task<Void>() {
+    public CustomTask createOut(String output) {
+        return new CustomTask() {
             @Override
             protected Void call() throws Exception {
                 OutputStream os = null;
                 try {
                     os = new FileOutputStream(output);
                     while (dataExist) {
+                        // check if the thread paused
+                        checkPaused();
+
                         os.write(buffer.take());
                         current.getAndDecrement();
                     }
@@ -62,6 +69,20 @@ public class Tasks {
                         os.flush();
                         os.close();
                     }
+                }
+
+                return null;
+            }
+        };
+    }
+
+    public CustomTask monitorState(int capacity) {
+        return new CustomTask() {
+            @Override
+            protected Void call() throws Exception {
+
+                while (!isStopped()) {
+                    updateProgress(current.get(), capacity);
                 }
 
                 return null;

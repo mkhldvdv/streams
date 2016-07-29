@@ -6,22 +6,22 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="streams.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="streams.controllers.MainController">
    <children>
-      <TextField fx:id="input" layoutX="82.0" layoutY="44.0" prefHeight="25.0" prefWidth="260.0" promptText="Choose input file location" />
-      <Button fx:id="inputFile" layoutX="352.0" layoutY="44.0" mnemonicParsing="false" onAction="#pressInputFileChooser" prefHeight="25.0" prefWidth="24.0" text="..." />
-      <TextField fx:id="output" layoutX="82.0" layoutY="93.0" prefHeight="25.0" prefWidth="260.0" promptText="Output file location" />
-      <Button fx:id="outputFile" layoutX="352.0" layoutY="93.0" mnemonicParsing="false" onAction="#pressOutputFileChooser" prefHeight="25.0" prefWidth="24.0" text="..." />
-      <TextField fx:id="bufferInput" layoutX="82.0" layoutY="143.0" prefHeight="25.0" prefWidth="260.0" promptText="Enter buffer size" />
-      <ProgressBar fx:id="progress" focusTraversable="false" layoutX="82.0" layoutY="212.0" prefHeight="18.0" prefWidth="294.0" progress="0.0" visible="false" />
-      <Button fx:id="start" defaultButton="true" layoutX="82.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressStartButton" prefHeight="25.0" prefWidth="140.0" text="Start" />
-      <Button fx:id="exit" cancelButton="true" layoutX="236.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressExitButton" prefHeight="25.0" prefWidth="140.0" text="Exit" />
+      <TextField fx:id="input" layoutX="82.0" layoutY="44.0" prefHeight="25.0" prefWidth="260.0" promptText="Choose input file location" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="108.0" />
+      <Button fx:id="inputFile" layoutX="352.0" layoutY="44.0" mnemonicParsing="false" onAction="#pressInputFileChooser" prefHeight="25.0" prefWidth="24.0" text="..." AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="44.0" />
+      <TextField fx:id="output" layoutX="82.0" layoutY="93.0" prefHeight="25.0" prefWidth="260.0" promptText="Output file location" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="108.0" />
+      <Button fx:id="outputFile" layoutX="352.0" layoutY="93.0" mnemonicParsing="false" onAction="#pressOutputFileChooser" prefHeight="25.0" prefWidth="24.0" text="..." AnchorPane.rightAnchor="74.0" />
+      <TextField fx:id="bufferInput" layoutX="82.0" layoutY="143.0" prefHeight="25.0" prefWidth="260.0" promptText="Enter buffer size" AnchorPane.leftAnchor="74.0" />
+      <ProgressBar fx:id="progress" focusTraversable="false" layoutX="82.0" layoutY="212.0" prefHeight="18.0" prefWidth="294.0" progress="0.0" visible="false" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="74.0" />
+      <Button fx:id="start" defaultButton="true" layoutX="82.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressStartButton" prefHeight="25.0" prefWidth="140.0" text="Start" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="74.0" />
+      <Button fx:id="exit" cancelButton="true" layoutX="236.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressExitButton" prefHeight="25.0" prefWidth="140.0" text="Exit" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="74.0" />
       <Label focusTraversable="false" layoutX="352.0" layoutY="147.0" prefHeight="17.0" prefWidth="32.0" text="Bytes" />
       <Label focusTraversable="false" layoutX="82.0" layoutY="27.0" text="Input file" />
       <Label focusTraversable="false" layoutX="82.0" layoutY="76.0" text="Output file" />
       <Label focusTraversable="false" layoutX="82.0" layoutY="126.0" text="Buffer size" />
-      <Button fx:id="pauseInput" layoutX="82.0" layoutY="247.0" mnemonicParsing="false" onAction="#pressPauseInput" prefHeight="25.0" prefWidth="140.0" text="Pause Input" visible="false" />
-      <Button fx:id="pauseOutput" layoutX="236.0" layoutY="247.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Pause Output" visible="false" />
-      <Button fx:id="cancelCopy" layoutX="236.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressCancelCopyButton" prefHeight="25.0" prefWidth="140.0" text="Cancel" visible="false" />
+      <Button fx:id="pauseInput" layoutX="82.0" layoutY="247.0" mnemonicParsing="false" onAction="#pressPauseInput" prefHeight="25.0" prefWidth="140.0" text="Pause Input" visible="false" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="74.0" />
+      <Button fx:id="pauseOutput" layoutX="236.0" layoutY="247.0" mnemonicParsing="false" onAction="#pressPauseOutput" prefHeight="25.0" prefWidth="140.0" text="Pause Output" visible="false" AnchorPane.bottomAnchor="128.0" AnchorPane.rightAnchor="74.0" />
+      <Button fx:id="cancelCopy" layoutX="236.0" layoutY="325.0" mnemonicParsing="false" onAction="#pressCancelCopyButton" prefHeight="25.0" prefWidth="140.0" text="Cancel" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="74.0" />
    </children>
-</Pane>
+</AnchorPane>
