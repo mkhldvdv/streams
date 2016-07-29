@@ -1,10 +1,12 @@
 package streams.controllers;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import streams.checks.Checks;
@@ -110,11 +112,6 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setOnCloseRequest(closeEvent -> closedError = true);
         alert.showAndWait();
-
-//        if (alert.getResult() == ButtonType.OK || closedError) {
-//            // return to the main form
-//            return;
-//        }
     }
 
     public void pressCancelCopyButton(ActionEvent event) {

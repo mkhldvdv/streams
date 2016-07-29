@@ -40,7 +40,8 @@ public abstract class CustomTask extends Task {
             try {
                 this.wait();
             } catch (InterruptedException e) {
-                // do nothing
+                this.stopThread();
+                this.cancel();
             }
         }
     }
