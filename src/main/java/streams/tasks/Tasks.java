@@ -2,6 +2,7 @@ package streams.tasks;
 
 import java.io.*;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -11,7 +12,7 @@ public class Tasks {
 
     private AtomicInteger current = new AtomicInteger();
     private final LinkedBlockingQueue<Integer> buffer;
-    private boolean dataExist = true;
+    private AtomicBoolean dataExist = new AtomicBoolean(true);
 
 
     public Tasks(int capacity) {
@@ -37,15 +38,15 @@ public class Tasks {
 
                         buffer.put(is.read());
                         current.incrementAndGet();
-//                        updateProgress(current.get(), capacity);
+
                         if (is.available() == 0) {
-                            dataExist = false;
+                            dataExist.set(false);
                         }
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } finally {
-                    dataExist = false;
+                    dataExist.set(false);
                     is.close();
                 }
 
@@ -67,7 +68,7 @@ public class Tasks {
                 OutputStream os = null;
                 try {
                     os = new FileOutputStream(output);
-                    while (dataExist) {
+                    while (!buffer.isEmpty() || dataExist.get()) {
                         // check if the thread paused
                         checkPaused();
 
